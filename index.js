@@ -262,8 +262,8 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 var data= [
         {
             "id": 7,
-            "email": "michael.lawson@reqres.in",
-            "first_name": "Michael",
+            "email": "anujk@reqres.in",
+            "first_name": "Anuj K",
             "last_name": "Lawson",
             "avatar": "https://reqres.in/img/faces/7-image.jpg"
         },
