@@ -1,7 +1,7 @@
 {
-    "name": "core-bot",
+    "name": "nlp-with-dispatch",
     "version": "1.0.0",
-    "description": "A bot that demonstrates core AI capabilities",
+    "description": "Bot Builder v4 example that demonstrates how dispatch should be used E2E.",
     "author": "Microsoft",
     "license": "MIT",
     "main": "index.js",
@@ -16,20 +16,12 @@
         "url": "https://github.com/Microsoft/BotBuilder-Samples.git"
     },
     "dependencies": {
-        "@microsoft/recognizers-text-data-types-timex-expression": "1.1.4",
-        "bluebird": "^3.7.2",
-        "botbuilder": "^3.13.1",
-        "botbuilder-ai": "~4.10.3",
-        "botbuilder-azure": "^3.0.4",
-        "botbuilder-cognitiveservices": "^1.2.0",
-        "botbuilder-dialogs": "~4.10.3",
-        "botbuilder-testing": "~4.10.3",
+        "botbuilder": "~4.11.0",
+        "botbuilder-ai": "~4.11.0",
+        "botbuilder-azure": "~4.11.0",
+        "botbuilder-dialogs": "~4.11.0",
         "dotenv": "^8.2.0",
-        "jquery": "^3.4.1",
-        "jsdom": "^16.1.0",
-        "node-fetch": "^2.6.0",
-        "restify": "~8.5.1",
-        "xml-js": "^1.6.11"
+        "restify": "~8.5.1"
     },
     "devDependencies": {
         "eslint": "^7.0.0",
