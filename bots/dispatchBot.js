@@ -17,7 +17,7 @@ class DispatchBot extends ActivityHandler {
         const dispatchRecognizer = new LuisRecognizer({
             applicationId: process.env.LuisAppId,
             endpointKey: process.env.LuisAPIKey,
-            endpoint: `https://${ process.env.LuisAPIHostName }.api.cognitive.microsoft.com`
+            endpoint: `https://${ process.env.LuisAPIHostName }`
         }, {
             includeAllIntents: true,
             includeInstanceData: true
