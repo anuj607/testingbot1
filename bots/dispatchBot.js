@@ -3,6 +3,7 @@
 
 const { ActivityHandler,CardFactory } = require('botbuilder');
 //console.dir(ActivityHandler);
+const  builder  = require('botbuilder');
 //const { botbuilder } = require('botbuilder').BotFrameworkAdapter;
 const { LuisRecognizer, QnAMaker } = require('botbuilder-ai');
 const QB_helper=require('./../QB_helper');
@@ -11,7 +12,7 @@ const QB_helper=require('./../QB_helper');
 class DispatchBot extends ActivityHandler {
     constructor() {
         super();
-        console.log(process.env);
+        //console.log(process.env);
         // If the includeApiResults parameter is set to true, as shown below, the full response
         // from the LUIS api will be made available in the properties  of the RecognizerResult
         const dispatchRecognizer = new LuisRecognizer({
@@ -58,11 +59,11 @@ class DispatchBot extends ActivityHandler {
         this.onMembersAdded(async (context, next) => {
             const welcomeText = 'Type a greeting or a question about the weather to get started.';
             const membersAdded = context.activity.membersAdded;
-
+            
+            await context.sendActivity('Welcome to ELP Bot ')+ String.fromCodePoint(0x1F642);
             for (const member of membersAdded) {
                 if (member.id !== context.activity.recipient.id) {
-                    await context.sendActivity('Welcome to ELP Bot ');
-                    await context.sendActivity('how may i help you  ');
+     
                     //await context.sendActivity(`Welcome to Dispatch bot ${ member.name }. ${ welcomeText }`);
                 }
             }
@@ -126,190 +127,227 @@ class DispatchBot extends ActivityHandler {
     }
 
 
-    async processGreetings(session, luisResult) {
-       // console.log(session);
+    async processGreetings(context, luisResult) {
+      
+
+            let username;
+
+            var clientInput=context._activity.from.name;
+            console.log(clientInput);
+            if(clientInput!='User'){
+            var clienDataJson=JSON.parse(clientInput);
+            username=clienDataJson.username;
+            }else{
+            username=clientInput;
+            }
+            console.log(username);
+            await context.sendActivity(`Hi ${username},how may i help you `);
+           
 
 
-       var data= [
-        {
-            "id": 7,
-            "email": "michael.lawson@reqres.in",
-            "first_name": "Michael",
-            "last_name": "Lawson",
-            "avatar": "https://reqres.in/img/faces/7-image.jpg"
-        },
-        {
-            "id": 8,
-            "email": "lindsay.ferguson@reqres.in",
-            "first_name": "Lindsay",
-            "last_name": "Ferguson",
-            "avatar": "https://reqres.in/img/faces/8-image.jpg"
-        },
-        {
-            "id": 9,
-            "email": "tobias.funke@reqres.in",
-            "first_name": "Tobias",
-            "last_name": "Funke",
-            "avatar": "https://reqres.in/img/faces/9-image.jpg"
-        },
-        {
-            "id": 10,
-            "email": "byron.fields@reqres.in",
-            "first_name": "Byron",
-            "last_name": "Fields",
-            "avatar": "https://reqres.in/img/faces/10-image.jpg"
-        },
-        {
-            "id": 11,
-            "email": "george.edwards@reqres.in",
-            "first_name": "George",
-            "last_name": "Edwards",
-            "avatar": "https://reqres.in/img/faces/11-image.jpg"
-        },
-        {
-            "id": 12,
-            "email": "rachel.howell@reqres.in",
-            "first_name": "Rachel",
-            "last_name": "Howell",
-            "avatar": "https://reqres.in/img/faces/12-image.jpg"
-        }
-    ];
-    var idArray=[];
-    idArray.push({"type": "TextBlock","weight": "bolder","text": "Sr"})
-    var nameArray=[];
-    nameArray.push({"type": "TextBlock","weight": "bolder","text": "Name"})
-
-    var EmailArray=[];
-    EmailArray.push({"type": "TextBlock","weight": "bolder","text": "Email"});
-
-    // "type": "TextBlock",
-    // "text": "Sorry some of them are repeats",
-    // "size": "medium",
-    // "weight": "lighter"
-
-    data.forEach(function(i){
-        var id =i.id.toString();
-        console.log(typeof(id));
-        idArray.push({"type": "TextBlock","separator":true,"text": id})
-        nameArray.push({"type": "TextBlock","separator":true,"text": i.first_name})
-        EmailArray.push({"type": "TextBlock","separator":true,"text": i.email})
-    })
-
-    var itemsArray=[
-        {
-            "type": "TextBlock",
-            "weight": "bolder",
-            "text": "Name"
-        },
-        {
-            "type": "TextBlock",
-            "separator":true,
-            "text": "Apple"
-        },{
-            "type": "TextBlock",
-            "separator":true,
-            "text": "Kiwi"
-        }
-    ];
-
-
-
-     var bodyArray=[
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "items": idArray,
-                    "width": 10,
-
-                },
-                {
-                    "type": "Column",
-                    "items": nameArray,
-                    "width": 25,
-                },
-                {
-                    "type": "Column",
-                    "items": EmailArray,
-                    "width": 40,
-                }
-                
-            ]
-        }
-    ]
-
-    console.log(idArray);
-    //console.dir(ActivityHandler);
-    var cardJson={
-     "contentType": "application/vnd.microsoft.card.adaptive",
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.0",
-    "body": bodyArray
-
+       
+    }
+    async sendCards(session){
+        var data= [
+            {
+                "id": 7,
+                "email": "michael.lawson@reqres.in",
+                "first_name": "Michael",
+                "last_name": "Lawson",
+                "avatar": "https://reqres.in/img/faces/7-image.jpg"
+            },
+            {
+                "id": 8,
+                "email": "lindsay.ferguson@reqres.in",
+                "first_name": "Lindsay",
+                "last_name": "Ferguson",
+                "avatar": "https://reqres.in/img/faces/8-image.jpg"
+            },
+            {
+                "id": 9,
+                "email": "tobias.funke@reqres.in",
+                "first_name": "Tobias",
+                "last_name": "Funke",
+                "avatar": "https://reqres.in/img/faces/9-image.jpg"
+            },
+            {
+                "id": 10,
+                "email": "byron.fields@reqres.in",
+                "first_name": "Byron",
+                "last_name": "Fields",
+                "avatar": "https://reqres.in/img/faces/10-image.jpg"
+            },
+            {
+                "id": 11,
+                "email": "george.edwards@reqres.in",
+                "first_name": "George",
+                "last_name": "Edwards",
+                "avatar": "https://reqres.in/img/faces/11-image.jpg"
+            },
+            {
+                "id": 12,
+                "email": "rachel.howell@reqres.in",
+                "first_name": "Rachel",
+                "last_name": "Howell",
+                "avatar": "https://reqres.in/img/faces/12-image.jpg"
+            }
+        ];
+        var idArray=[];
+        idArray.push({"type": "TextBlock","weight": "bolder","text": "Sr"})
+        var nameArray=[];
+        nameArray.push({"type": "TextBlock","weight": "bolder","text": "Name"})
+    
+        var EmailArray=[];
+        EmailArray.push({"type": "TextBlock","weight": "bolder","text": "Email"});
+    
+        // "type": "TextBlock",
+        // "text": "Sorry some of them are repeats",
+        // "size": "medium",
+        // "weight": "lighter"
+    
+        data.forEach(function(i){
+            var id =i.id.toString();
+            console.log(typeof(id));
+            idArray.push({"type": "TextBlock","separator":true,"text": id})
+            nameArray.push({"type": "TextBlock","separator":true,"text": i.first_name})
+            EmailArray.push({"type": "TextBlock","separator":true,"text": i.email})
+        })
+    
+        var itemsArray=[
+            {
+                "type": "TextBlock",
+                "weight": "bolder",
+                "text": "Name"
+            },
+            {
+                "type": "TextBlock",
+                "separator":true,
+                "text": "Apple"
+            },{
+                "type": "TextBlock",
+                "separator":true,
+                "text": "Kiwi"
+            }
+        ];
+    
+    
+    
+         var bodyArray=[
+            {
+                "type": "ColumnSet",
+                "columns": [
+                    {
+                        "type": "Column",
+                        "items": idArray,
+                        "width": 10,
+    
+                    },
+                    {
+                        "type": "Column",
+                        "items": nameArray,
+                        "width": 25,
+                    },
+                    {
+                        "type": "Column",
+                        "items": EmailArray,
+                        "width": 40,
+                    }
+                    
+                ]
+            }
+        ]
+    
+        console.log(idArray);
+        //console.dir(ActivityHandler);
+        var cardJson={
+         "contentType": "application/vnd.microsoft.card.adaptive",
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "type": "AdaptiveCard",
+        "version": "1.0",
+        "body": bodyArray
+    
+        };
+        // var msg = new ActivityHandler.Message(session)
+        // .addAttachment();
+    // session.sendActivity(msg);
+    //const randomlySelectedCard = CARDS[Math.floor((Math.random() * CARDS.length - 1) + 1)];
+    await session.sendActivity({
+        text: 'Reports for QB',
+        attachments: [CardFactory.adaptiveCard(cardJson)]
+    });
+    
+    var inputCard={
+        "type": "AdaptiveCard",
+        "body": [
+            {
+                "type": "TextBlock",
+                "text": "Test Adaptive Card"
+            },
+            {
+                "type": "ColumnSet",
+                "columns": [
+                    {
+                        "type": "Column",
+                        "items": [
+                            {
+                                "type": "TextBlock",
+                                "text": "Text:"
+                            }
+                        ],
+                        "width": 20
+                    },
+                    {
+                        "type": "Column",
+                        "items": [
+                            {
+                                "type": "Input.Text",
+                                "id": "userText",
+                                "placeholder": "Enter Some Text"
+                            }
+                        ],
+                        "width": 80
+                    }
+                ]
+            }
+        ],
+        "actions": [
+            {
+                "type": "Action.Submit",
+                "title": "Submit"
+            }
+        ],
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "version": "1.0"
     };
-    // var msg = new ActivityHandler.Message(session)
-    // .addAttachment();
-// session.sendActivity(msg);
-//const randomlySelectedCard = CARDS[Math.floor((Math.random() * CARDS.length - 1) + 1)];
-await session.sendActivity({
-    text: 'Reports for QB',
-    attachments: [CardFactory.adaptiveCard(cardJson)]
-});
-
-var inputCard={
-    "type": "AdaptiveCard",
-    "body": [
-        {
-            "type": "TextBlock",
-            "text": "Test Adaptive Card"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "TextBlock",
-                            "text": "Text:"
-                        }
-                    ],
-                    "width": 20
-                },
-                {
-                    "type": "Column",
-                    "items": [
-                        {
-                            "type": "Input.Text",
-                            "id": "userText",
-                            "placeholder": "Enter Some Text"
-                        }
-                    ],
-                    "width": 80
-                }
-            ]
-        }
-    ],
-    "actions": [
-        {
-            "type": "Action.Submit",
-            "title": "Submit"
-        }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.0"
-};
-
-await session.sendActivity({
-    text: 'Input the details',
-    attachments: [CardFactory.adaptiveCard(inputCard)]
-});
-console.log('here input')
-//console.log(session);
-
-        //session.sendActivity('Greeting m aaya');
+    
+    await session.sendActivity({
+        text: 'Input the details',
+        attachments: [CardFactory.adaptiveCard(inputCard)]
+    });
+    console.log('here input')
+    
+    // builder.Prompts.choice(sess, "Pick a dialog.", [
+    //     "Audio Card"
+    //     ,"Video Card"
+    //     ,"Animation Card"
+    //     ,"Thumbnail Card"
+    //     ,"Hero Card"
+    //     ,"Sign-In Card"
+    //     ,"Exit"
+    // ]);
+    //builder.Prompts.text(sess, "Hello user! What may we call you?");
+    
+    //builder.Prompts.choice(session, "Was this helpful?","Yes|No",{listStyle:3});
+    
+    console.log(session.pro)
+    
+    
+    
+    
+    
+    //console.log(session);
+    
+            //session.sendActivity('Greeting m aaya');
     }
 
     async processSampleQnA(context) {

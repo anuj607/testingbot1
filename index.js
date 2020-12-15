@@ -14,9 +14,19 @@ const restify = require('restify');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { BotFrameworkAdapter } = require('botbuilder');
+//const { BotFrameworkAdapter } = require('botbuilder');
+
+/**** Auth change */
+const { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } = require('botbuilder');
+
+const { AuthBot } = require('./bots/authBot');
+const { MainDialog } = require('./dialogs/mainDialog');
+
+
+/*** auth change end */
 
 const { DispatchBot } = require('./bots/dispatchBot');
+
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more.
@@ -59,8 +69,11 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 
 // Listen for incoming activities and route them to your bot main dialog.
 server.post('/api/messages', (req, res) => {
+    
     // Route received a request to adapter for processing
     adapter.processActivity(req, res, async (turnContext) => {
+        console.log('start 64');
+        //console.log(turnContext)
         // route to bot activity handler.
         await bot.run(turnContext);
     });
