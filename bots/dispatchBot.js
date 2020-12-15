@@ -60,10 +60,12 @@ class DispatchBot extends ActivityHandler {
             const welcomeText = 'Type a greeting or a question about the weather to get started.';
             const membersAdded = context.activity.membersAdded;
             
-            await context.sendActivity('Welcome to ELP Bot ')+ String.fromCodePoint(0x1F642);
+            console.log('type='+context.activity.type);
+
             for (const member of membersAdded) {
                 if (member.id !== context.activity.recipient.id) {
-     
+                    //await context.sendActivity('Welcome to ELP Bot '+String.fromCodePoint(0x1F642));
+                    
                     //await context.sendActivity(`Welcome to Dispatch bot ${ member.name }. ${ welcomeText }`);
                 }
             }
