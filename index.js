@@ -75,9 +75,9 @@ server.post('/api/messages', (req, res) => {
          console.log('activity');
         // console.log('type==='+turnContext.activity.type);
 
-        if(turnContext.activity.type=='conversationUpdate'){
-            await turnContext.sendActivity('Welcome to ELP Bot '+String.fromCodePoint(0x1F642));  
-        }
+        // if(turnContext.activity.type=='conversationUpdate'){
+        //     await turnContext.sendActivity('Welcome to ELP Bot '+String.fromCodePoint(0x1F642));  
+        // }
         //console.log(turnContext)
         // route to bot activity handler.
         await bot.run(turnContext);

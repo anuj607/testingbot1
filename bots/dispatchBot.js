@@ -64,7 +64,7 @@ class DispatchBot extends ActivityHandler {
 
             for (const member of membersAdded) {
                 if (member.id !== context.activity.recipient.id) {
-                    //await context.sendActivity('Welcome to ELP Bot '+String.fromCodePoint(0x1F642));
+                    await context.sendActivity('Welcome to ELP Bot '+String.fromCodePoint(0x1F642));
                     
                     //await context.sendActivity(`Welcome to Dispatch bot ${ member.name }. ${ welcomeText }`);
                 }
